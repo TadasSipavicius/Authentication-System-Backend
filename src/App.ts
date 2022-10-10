@@ -16,8 +16,8 @@ app.get("/", (req, res) => {
 })
 
 app.use('/api/rating', ratingRoutes)
-app.use('/api/rating/team', teamRoutes);
-app.use('/api/rating/team/player', basketballPlayersRoutes);
+app.use('/api/team', teamRoutes);
+app.use('/api/rating', basketballPlayersRoutes);
 
 app.listen(1337, () => {
     console.log(`Working on server...`)

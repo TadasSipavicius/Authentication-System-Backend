@@ -1,21 +1,25 @@
 import { NextFunction, Request, Response } from "express"
+import { type } from "os";
 import { ConnectMYSQL, Query } from "../Config/mysql";
 
 const getTeamList = (req: Request, res: Response, next: NextFunction) => {
 
-    let userHash = req.body;
-    let query = `SELECT * from team WHERE user_identifier = ${userHash} `;
+    let { userHash } = req.body;
+    let query = `SELECT * from team WHERE user_identifier = "${userHash}" `;
 
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
-                .then(results => {
+                .then((results: any) => {
+
+                    if (!Object.keys(results).length) return res.status(204).json(null);
+
                     return res.status(200).json({
                         results
                     })
                 })
                 .catch(error => {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: error.message,
                         error
                     })
@@ -34,20 +38,24 @@ const getTeamList = (req: Request, res: Response, next: NextFunction) => {
 
 const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) => {
 
-    let { teamID, userHash } = req.body;
-    let query = `SELECT * from team WHERE user_identifier = ${userHash} AND ID = ${teamID}`;
+    let teamID = req.params.teamID;
+    let { userHash } = req.body;
+    let query = `SELECT * from team WHERE user_identifier = "${userHash}" AND ID = "${teamID}"`;
 
 
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
-                .then(results => {
+                .then((results: any) => {
+
+                    if (!Object.keys(results).length) return res.status(204).json(null);
+
                     return res.status(200).json({
                         results
                     })
                 })
                 .catch(error => {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: error.message,
                         error
                     })
@@ -73,12 +81,12 @@ const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
         .then(connection => {
             Query(connection, query)
                 .then(result => {
-                    return res.status(200).json({
+                    return res.status(201).json({
                         result
                     })
                 })
                 .catch(error => {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: error.message,
                         error
                     })
@@ -104,12 +112,12 @@ const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
         .then(connection => {
             Query(connection, query)
                 .then(result => {
-                    return res.status(200).json({
+                    return res.status(204).json({
                         result
                     })
                 })
                 .catch(error => {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: error.message,
                         error
                     })
@@ -128,7 +136,7 @@ const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
 
 const updateTeam = (req: Request, res: Response, next: NextFunction) => {
 
-    let teamID  = req.params.teamID;
+    let teamID = req.params.teamID;
     let { team_name, guard_players, foward_players, center_players } = req.body;
 
     let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} `;
@@ -142,7 +150,7 @@ const updateTeam = (req: Request, res: Response, next: NextFunction) => {
                     })
                 })
                 .catch(error => {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         message: error.message,
                         error
                     })
