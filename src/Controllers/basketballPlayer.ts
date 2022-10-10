@@ -66,7 +66,7 @@ const getBasketballPlayerByID = (req: Request, res: Response, next: NextFunction
 const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
 
     let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
-    let query = `INSERT INTO team (name, position, price, team_name) VALUES ("${basketballPlayer_name}","${basketballPlayer_position}","${basketballPlayer_price}","${basketballPlayer_teamName}")`;
+    let query = `INSERT INTO basketball_player (name, position, price, team_name) VALUES ("${basketballPlayer_name}","${basketballPlayer_position}","${basketballPlayer_price}","${basketballPlayer_teamName}")`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -96,8 +96,8 @@ const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFuncti
 
 const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
 
-    let { playerID } = req.body;
-    let query = `DELETE FROM team WHERE ID = ${playerID}`;
+    let playerID  = req.params.basketballPlayerID;
+    let query = `DELETE FROM basketball_player WHERE ID = ${playerID}`;
 
     ConnectMYSQL()
         .then(connection => {
