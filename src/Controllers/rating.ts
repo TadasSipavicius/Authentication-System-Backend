@@ -1,41 +1,9 @@
 import { NextFunction, Request, Response } from "express"
 import { ConnectMYSQL, Query } from "../Config/mysql";
 
-const getBasketballPlayersList = (req: Request, res: Response, next: NextFunction) => {
+const getTeamsRatingList = (req: Request, res: Response, next: NextFunction) => {
 
-    let query = 'SELECT * from basketball_player';
-
-    ConnectMYSQL()
-        .then(connection => {
-            Query(connection, query)
-                .then(results => {
-                    return res.status(200).json({
-                        results
-                    })
-                })
-                .catch(error => {
-                    return res.status(500).json({
-                        message: error.message,
-                        error
-                    })
-                })
-                .finally(() => {
-                    connection.end();
-                })
-        })
-        .catch(error => {
-            return res.status(500).json({
-                message: error.message,
-                error
-            })
-        })
-}
-
-const getBasketballPlayerByID = (req: Request, res: Response, next: NextFunction) => {
-
-    let basketballPlayerID = req.params.basketballPlayerID;
-    let query = `SELECT * from basketball_player WHERE ID = ${basketballPlayerID}`;
-
+    let query = 'SELECT * from rating';
 
     ConnectMYSQL()
         .then(connection => {
@@ -63,10 +31,42 @@ const getBasketballPlayerByID = (req: Request, res: Response, next: NextFunction
         })
 }
 
-const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
+const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) => {
 
-    let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
-    let query = `INSERT INTO team (name, position, price, team_name) VALUES ("${basketballPlayer_name}","${basketballPlayer_position}","${basketballPlayer_price}","${basketballPlayer_teamName}")`;
+    let teamID = req.params.teamID;
+    let query = `SELECT * from rating WHERE ID = ${teamID}`;
+
+
+    ConnectMYSQL()
+        .then(connection => {
+            Query(connection, query)
+                .then(results => {
+                    return res.status(200).json({
+                        results
+                    })
+                })
+                .catch(error => {
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    })
+                })
+                .finally(() => {
+                    connection.end();
+                })
+        })
+        .catch(error => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            })
+        })
+}
+
+const insertNewTeamToRating = (req: Request, res: Response, next: NextFunction) => {
+
+    let { teamID, teamName } = req.body;
+    let query = `INSERT INTO team (ID, team_name, current_placement) VALUES ("${teamID}","${teamName}","${teamID}")`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -94,10 +94,10 @@ const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFuncti
         })
 }
 
-const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
+const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) => {
 
-    let { playerID } = req.body;
-    let query = `DELETE FROM team WHERE ID = ${playerID}`;
+    let { teamID } = req.body;
+    let query = `DELETE FROM rating WHERE ID = ${teamID}`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -125,4 +125,33 @@ const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction)
         })
 }
 
-export default { getBasketballPlayersList, getBasketballPlayerByID, insertNewBasketballPlayer, deleteBasketballPlayer }
+const resetRating = (req: Request, res: Response, next: NextFunction) => {
+
+    let query = `DELETE FROM rating`;
+
+    ConnectMYSQL()
+        .then(connection => {
+            Query(connection, query)
+                .then(result => {
+                    return res.status(200).json({
+                        result
+                    })
+                })
+                .catch(error => {
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    })
+                })
+                .finally(() => {
+                    connection.end();
+                })
+        })
+        .catch(error => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            })
+        })
+}
+export default { getTeamsRatingList, getTeamRatingByTeamID, insertNewTeamToRating, deleteTeamFromRating, resetRating }
