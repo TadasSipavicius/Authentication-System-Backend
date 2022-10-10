@@ -125,4 +125,36 @@ const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction)
         })
 }
 
-export default { getBasketballPlayersList, getBasketballPlayerByID, insertNewBasketballPlayer, deleteBasketballPlayer }
+const updateBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
+
+    let playerID  = req.params.basketballPlayerID;
+    let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
+    let query = `UPDATE basketball_player  SET name = "${basketballPlayer_name}", position = "${basketballPlayer_position}", price = "${basketballPlayer_price}", team_name = "${basketballPlayer_teamName}" WHERE ID = ${playerID} `;
+
+    ConnectMYSQL()
+        .then(connection => {
+            Query(connection, query)
+                .then(result => {
+                    return res.status(200).json({
+                        result
+                    })
+                })
+                .catch(error => {
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    })
+                })
+                .finally(() => {
+                    connection.end();
+                })
+        })
+        .catch(error => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            })
+        })
+}
+
+export default { getBasketballPlayersList, getBasketballPlayerByID, insertNewBasketballPlayer, deleteBasketballPlayer, updateBasketballPlayer }

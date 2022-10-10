@@ -126,4 +126,37 @@ const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
         })
 }
 
-export default { getTeamList, getTeamListByTeamID, insertNewTeam, deleteTeam }
+const updateTeam = (req: Request, res: Response, next: NextFunction) => {
+
+    let teamID  = req.params.teamID;
+    let { team_name, guard_players, foward_players, center_players } = req.body;
+
+    let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} `;
+
+    ConnectMYSQL()
+        .then(connection => {
+            Query(connection, query)
+                .then(result => {
+                    return res.status(200).json({
+                        result
+                    })
+                })
+                .catch(error => {
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    })
+                })
+                .finally(() => {
+                    connection.end();
+                })
+        })
+        .catch(error => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            })
+        })
+}
+
+export default { getTeamList, getTeamListByTeamID, insertNewTeam, deleteTeam, updateTeam }
