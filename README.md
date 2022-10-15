@@ -148,3 +148,70 @@ localhost:1337/api/team/delete/:teamID
 }
 ```
 ----------------------------------------------------------------------------
+
+
+
+### Rating
+#### Description: 
+Create new Team into Rating (CREATE method)
+
+#### Url: 
+localhost:1337/api/rating/create
+
+#### Params: 
+```json
+       {
+               "teamID": 11,
+               "teamName": "Testuotojai",
+               "ratingPlace": 2
+       }
+```
+
+----------------------------------------------------------------------------
+
+#### Description: 
+Get rating list (GET method)
+
+#### Url: 
+localhost:1337/api/rating
+
+#### Params: 
+```json
+none
+```
+----------------------------------------------------------------------------
+
+#### Description: 
+Get team rating (GET method by ID)
+
+#### Url: 
+localhost:1337/api/rating/team/:teamID
+
+#### Params: 
+```json
+none
+```
+----------------------------------------------------------------------------
+
+#### Description: 
+Delete a selected Team from Rating (DELETE method)
+
+#### Url: 
+localhost:1337/api/rating/delete/:teamID
+
+#### Params: 
+```json
+none
+```
+----------------------------------------------------------------------------
+#### Description: 
+Reset rating (DELETE method)
+
+#### Url: 
+localhost:1337/api/rating/reset
+
+#### Params: 
+```json
+none
+```
+----------------------------------------------------------------------------
