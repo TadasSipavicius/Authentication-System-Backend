@@ -69,10 +69,10 @@ const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) 
         })
 }
 
-const insertNewTeamToRating = (req: Request, res: Response, next: NextFunction) => {
+const insertNewTeamToRating = async (req: Request, res: Response, next: NextFunction) => {
 
-    let { teamID, teamName } = req.body;
-    let query = `INSERT INTO team (ID, team_name, current_placement) VALUES ("${teamID}","${teamName}","${teamID}")`;
+    let { teamID, teamName, ratingPlace } = req.body;
+    let query = `INSERT INTO rating (ID, team_name, current_placement) VALUES ("${teamID}","${teamName}","${ratingPlace}")`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -101,8 +101,8 @@ const insertNewTeamToRating = (req: Request, res: Response, next: NextFunction) 
 }
 
 const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) => {
-
-    let { teamID } = req.body;
+    
+    let teamID = req.params.teamID;
     let query = `DELETE FROM rating WHERE ID = ${teamID}`;
 
     ConnectMYSQL()

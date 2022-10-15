@@ -3,7 +3,7 @@ import controller from '../Controllers/rating';
 const router = express.Router();
 
 router.get('', controller.getTeamsRatingList);
-router.get('/:teamID', controller.getTeamRatingByTeamID);
+router.get('/team/:teamID', controller.getTeamRatingByTeamID);
 router.post('/create', controller.insertNewTeamToRating);
 router.delete('/delete/:teamID', controller.deleteTeamFromRating);
 router.delete('/reset', controller.resetRating);

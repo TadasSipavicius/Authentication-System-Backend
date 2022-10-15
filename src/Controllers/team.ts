@@ -105,8 +105,9 @@ const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
 
 const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
 
-    let { teamID, userHash } = req.body;
-    let query = `DELETE FROM team WHERE user_identifier = ${userHash} AND ID = ${teamID}`;
+    let teamID = req.params.teamID;
+    let { userHash } = req.body;
+    let query = `DELETE FROM team WHERE user_identifier = "${userHash}" AND ID = "${teamID}"`;
 
     ConnectMYSQL()
         .then(connection => {
