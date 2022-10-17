@@ -41,7 +41,7 @@ localhost:1337/api/rating/team/basketballPlayer/update/:basketballPlayerID
 Get all Basketball Players (GET method)
 
 #### Url: 
-localhost:1337/api/rating/team/basketballPlayer
+localhost:1337/api/rating/team/basketballPlayer/players
 
 #### Params: 
 ```json
