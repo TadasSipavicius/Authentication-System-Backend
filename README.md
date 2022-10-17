@@ -7,7 +7,7 @@
 Create Basketball Player (CREATE method)
 
 #### Url: 
-localhost:1337/api/basketballPlayer/create
+localhost:1337/api/rating/team/basketballPlayer/create
 
 #### Params: 
 ```json
@@ -24,7 +24,7 @@ localhost:1337/api/basketballPlayer/create
 Edit Basketball Player (EDIT method)
 
 #### Url: 
-localhost:1337/api/basketballPlayer/update/:basketballPlayerID
+localhost:1337/api/rating/team/basketballPlayer/update/:basketballPlayerID
 
 #### Params: 
 ```json
@@ -41,7 +41,7 @@ localhost:1337/api/basketballPlayer/update/:basketballPlayerID
 Get all Basketball Players (GET method)
 
 #### Url: 
-localhost:1337/api/basketballPlayer
+localhost:1337/api/rating/team/basketballPlayer
 
 #### Params: 
 ```json
@@ -53,7 +53,7 @@ None
 Get a selected Basketball Player (GET method by ID)
 
 #### Url: 
-localhost:1337/api/basketballPlayer/:basketballPlayerID
+localhost:1337/api/rating/team/basketballPlayer/:basketballPlayerID
 
 #### Params: 
 ```json
@@ -65,7 +65,7 @@ None
 Delete a selected Basketball Player (DELETE method)
 
 #### Url: 
-localhost:1337/api/basketballPlayer/delete/:basketballPlayerID
+localhost:1337/api/rating/team/basketballPlayer/delete/:basketballPlayerID
 
 #### Params: 
 ```json
@@ -79,7 +79,7 @@ None
 Create new Team (CREATE method)
 
 #### Url: 
-localhost:1337/api/team/create
+localhost:1337/api/rating/team/create
 
 #### Params: 
 ```json
@@ -94,7 +94,7 @@ localhost:1337/api/team/create
 Edit selected Team (EDIT method)
 
 #### Url: 
-localhost:1337/api/team/update/:teamID
+localhost:1337/api/rating/team/update/:teamID
 
 #### Params: 
 ```json
@@ -111,7 +111,7 @@ localhost:1337/api/team/update/:teamID
 Get all Basketball Players (GET method)
 
 #### Url: 
-localhost:1337/api/team
+localhost:1337/api/rating/team
 
 #### Params: 
 ```json
@@ -125,7 +125,7 @@ localhost:1337/api/team
 Get a selected Basketball Player (GET method by ID)
 
 #### Url: 
-localhost:1337/api/team/:teamID
+localhost:1337/api/rating/team/:teamID
 
 #### Params: 
 ```json
@@ -139,7 +139,7 @@ localhost:1337/api/team/:teamID
 Delete a selected Basketball Player (DELETE method)
 
 #### Url: 
-localhost:1337/api/team/delete/:teamID
+localhost:1337/api/rating/team/delete/:teamID
 
 #### Params: 
 ```json
