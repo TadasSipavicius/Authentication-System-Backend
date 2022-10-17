@@ -51,10 +51,10 @@ None
 
 #### Description: 
 Get a selected Basketball Player (GET method by ID)
-
 #### Url: 
-localhost:1337/api/basketballPlayer/:basketballPlayerID
-
+localhost:1337/api/rating/:ratingID/team/:teamID/basketballPlayer/:basketballPlayerID
+e.g.
+localhost:1337/api/rating/12/team/12/basketballPlayer/1
 #### Params: 
 ```json
 None
