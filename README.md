@@ -8,6 +8,7 @@ Create Basketball Player (CREATE method)
 
 #### Url: 
 localhost:1337/api/basketballPlayer
+
 POST
 #### Params: 
 ```json
