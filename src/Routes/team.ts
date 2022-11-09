@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get('', controller.getTeamList);
 router.get('/:teamID', controller.getTeamListByTeamID);
-router.post('/create', controller.insertNewTeam);
-router.delete('/delete/:teamID', controller.deleteTeam);
-router.put('/update/:teamID', controller.updateTeam);
+router.post('', controller.insertNewTeam);
+router.delete('/:teamID', controller.deleteTeam);
+router.put('/:teamID', controller.updateTeam);
 
 export = router;
