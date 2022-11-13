@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "tsc --build tsconfig.json",
+    
     "start": "ts-node --files src/app.ts"
   },
   "author": "",
