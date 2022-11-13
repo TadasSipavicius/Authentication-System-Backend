@@ -39,6 +39,7 @@ const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) =>
 
     let teamID = req.params.teamID;
     const user = req.user;
+    console.log("user", user)
     let query = `SELECT * from team WHERE user_identifier = "${user.userID}" AND ID = "${teamID}"`;
 
 
@@ -106,8 +107,8 @@ const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
 const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
 
     let teamID = req.params.teamID;
-    let { userHash } = req.body;
-    let query = `DELETE FROM team WHERE user_identifier = "${userHash}" AND ID = "${teamID}"`;
+    const user = req.user;
+    let query = `DELETE FROM team WHERE user_identifier = "${user.userID}" AND ID = "${teamID}"`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -136,11 +137,11 @@ const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const updateTeam = (req: Request, res: Response, next: NextFunction) => {
-
+    const user = req.user;
     let teamID = req.params.teamID;
     let { team_name, guard_players, foward_players, center_players } = req.body;
 
-    let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} `;
+    let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
     ConnectMYSQL()
         .then(connection => {

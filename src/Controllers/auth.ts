@@ -12,11 +12,11 @@ const authVerify = (req: Request, res: Response, next: NextFunction) => {
     if (!accessToken) return res.status(401).send("Access Denied");
 
     try {
-        const verified = jwt.verify(accessToken, process.env.TOKEN_SECRET as Secret, (err, user) => {
-            if(err) return res.status(403).send("Bad token");
+        jwt.verify(accessToken, process.env.TOKEN_SECRET as Secret, (err, user) => {
+            if (err) return res.status(403).send("Bad token");
+            req.user = user;
+            next();
         });
-        req.user = verified;
-        next();
     } catch (err) {
         res.status(403).send(err);
     }
@@ -70,7 +70,7 @@ const UserRegister = async (req: Request, res: Response, next: NextFunction) => 
 
 const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-
+    console.log("AAA")
     const validationSchema = Joi.object({
         email: Joi.string()
             .email(),

@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('', authVerify.authVerify, controller.getTeamList);
 router.get('/:teamID', authVerify.authVerify, controller.getTeamListByTeamID);
 router.post('', authVerify.authVerify, controller.insertNewTeam);
-router.delete('/:teamID', controller.deleteTeam);
-router.put('/:teamID', controller.updateTeam);
+router.delete('/:teamID', authVerify.authVerify, controller.deleteTeam);
+router.put('/:teamID', authVerify.authVerify, controller.updateTeam);
 
 export = router;
