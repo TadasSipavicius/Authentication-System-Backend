@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Joi from '@hapi/joi';
 import bcrypt from 'bcrypt';
 import jwt, { Secret } from 'jsonwebtoken';
-import { IGetUserAuthInfoRequest } from "./basketballPlayer";
 
 let refreshTokens: any[] = [];
 
@@ -12,13 +11,13 @@ const GenerateAccessToken = (userID: string, roles: string) => {
     return jwt.sign({ userID: userID, roles: roles }, process.env.TOKEN_SECRET as Secret, { expiresIn: '5m' })
 }
 
-const authVerify = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+const authVerify = (req: any, res: Response, next: NextFunction) => {
     const accessToken = req.header('auth-access-token');
     console.log(accessToken);
     if (!accessToken) return res.status(401).send("Access Denied");
 
     try {
-        jwt.verify(accessToken, process.env.TOKEN_SECRET as Secret, (err, user) => {
+        jwt.verify(accessToken, process.env.TOKEN_SECRET as Secret, (err: any, user: any) => {
             if (err) return res.status(403).send("Bad token");
             req.user = user;
             next();

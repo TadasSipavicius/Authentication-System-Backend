@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from "express"
 import { ConnectMYSQL, Query } from "../Config/mysql";
-export interface IGetUserAuthInfoRequest extends Request {
-    user: any
-}
 
 const getBasketballPlayersList = (req: Request, res: Response, next: NextFunction) => {
 
@@ -102,7 +99,7 @@ const getBasketballPlayerByID = (req: Request, res: Response, next: NextFunction
         })
 }
 
-const insertNewBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+const insertNewBasketballPlayer = (req: any, res: Response, next: NextFunction) => {
     const user = req.user;
     let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
 
@@ -135,7 +132,7 @@ const insertNewBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, 
         })
 }
 
-const deleteBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+const deleteBasketballPlayer = (req: any, res: Response, next: NextFunction) => {
 
     const user = req.user;
     let playerID = req.params.basketballPlayerID;
@@ -169,7 +166,7 @@ const deleteBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, nex
         })
 }
 
-const updateBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+const updateBasketballPlayer = (req: any, res: Response, next: NextFunction) => {
 
     const user = req.user;
     let playerID = req.params.basketballPlayerID;
