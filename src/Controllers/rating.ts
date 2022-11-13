@@ -36,8 +36,9 @@ const getTeamsRatingList = (req: Request, res: Response, next: NextFunction) => 
 
 const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) => {
 
+    const user = req.user;
     let teamID = req.params.teamID;
-    let query = `SELECT * from rating WHERE ID = ${teamID}`;
+    let query = `SELECT * from rating WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
 
     ConnectMYSQL()
@@ -70,9 +71,10 @@ const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) 
 }
 
 const insertNewTeamToRating = async (req: Request, res: Response, next: NextFunction) => {
-
+    
+    const user = req.user;
     let { teamID, teamName, ratingPlace } = req.body;
-    let query = `INSERT INTO rating (ID, team_name, current_placement) VALUES ("${teamID}","${teamName}","${ratingPlace}")`;
+    let query = `INSERT INTO rating (ID, team_name, current_placement, user_identifier) VALUES ("${teamID}","${teamName}","${ratingPlace}","${user.userID}")`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -102,8 +104,9 @@ const insertNewTeamToRating = async (req: Request, res: Response, next: NextFunc
 
 const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) => {
     
+    const user = req.user;
     let teamID = req.params.teamID;
-    let query = `DELETE FROM rating WHERE ID = ${teamID}`;
+    let query = `DELETE FROM rating WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
     ConnectMYSQL()
         .then(connection => {
@@ -132,7 +135,7 @@ const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) =
 }
 
 const resetRating = (req: Request, res: Response, next: NextFunction) => {
-
+    const user = req.user;
     let query = `DELETE FROM rating`;
 
     ConnectMYSQL()
