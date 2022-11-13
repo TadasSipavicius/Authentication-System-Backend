@@ -118,8 +118,8 @@ const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
 
     const validPassword = await bcrypt.compare(password, user[0].password);
     if (!validPassword) return res.status(400).send("Invalid password")
-
-    const token = jwt.sign({ userID: user[0].iduser }, process.env.TOKEN_SECRET as Secret);
+        console.log(user)
+    const token = jwt.sign({ userID: user[0].iduser, roles: user[0].roles }, process.env.TOKEN_SECRET as Secret);
     res.header('auth-access-token', token).status(200).send(token)
 }
 export default { UserRegister, UserLogin, authVerify }

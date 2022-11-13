@@ -138,6 +138,8 @@ const resetRating = (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
     let query = `DELETE FROM rating`;
 
+    if(user && user?.roles !== "Admin") return res.status(403).send("No Access");
+
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
