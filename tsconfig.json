@@ -93,10 +93,12 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "global.d.ts",
     "src/**/*.ts" /* Include every ts file in source folder */
   ],
   "exclude": [
     "node_modules" /* exclude everything in  node_modules */
+  ],
+  "files": [
+    "globals.d.ts"
   ]
 }
