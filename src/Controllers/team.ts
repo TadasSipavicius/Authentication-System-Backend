@@ -3,16 +3,15 @@ import { type } from "os";
 import { ConnectMYSQL, Query } from "../Config/mysql";
 
 const getTeamList = (req: Request, res: Response, next: NextFunction) => {
-
-    let { userHash } = req.body;
-    let query = `SELECT * from team WHERE user_identifier = "${userHash}" `;
+    const user = req.user;
+    let query = `SELECT * from team WHERE user_identifier = "${user.userID}" `;
 
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
                 .then((results: any) => {
 
-                    if (!Object.keys(results).length) return res.status(204).json(null);
+                    if (!Object.keys(results).length) return res.status(400).json(null);
 
                     return res.status(200).json({
                         results
@@ -39,8 +38,8 @@ const getTeamList = (req: Request, res: Response, next: NextFunction) => {
 const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) => {
 
     let teamID = req.params.teamID;
-    let { userHash } = req.body;
-    let query = `SELECT * from team WHERE user_identifier = "${userHash}" AND ID = "${teamID}"`;
+    const user = req.user;
+    let query = `SELECT * from team WHERE user_identifier = "${user.userID}" AND ID = "${teamID}"`;
 
 
     ConnectMYSQL()
@@ -74,8 +73,9 @@ const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) =>
 
 const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
 
-    let { team_name, userHash } = req.body;
-    let query = `INSERT INTO team (name, user_identifier) VALUES ("${team_name}", "${userHash}")`;
+    let { team_name } = req.body;
+    const user = req.user;
+    let query = `INSERT INTO team (name, user_identifier) VALUES ("${team_name}", "${user.userID}")`;
 
     ConnectMYSQL()
         .then(connection => {
