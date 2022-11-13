@@ -11,7 +11,10 @@ const getTeamList = (req: Request, res: Response, next: NextFunction) => {
             Query(connection, query)
                 .then((results: any) => {
 
-                    if (!Object.keys(results).length) return res.status(400).json(null);
+                    if (!Object.keys(results).length) return res.status(400).send({
+                        message: "No data was found",
+                        data: results
+                    });
 
                     return res.status(200).json({
                         results
@@ -42,13 +45,15 @@ const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) =>
     console.log("user", user)
     let query = `SELECT * from team WHERE user_identifier = "${user.userID}" AND ID = "${teamID}"`;
 
-
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
                 .then((results: any) => {
 
-                    if (!Object.keys(results).length) return res.status(204).json(null);
+                    if (!Object.keys(results).length) return res.status(400).send({
+                        message: "No data was found",
+                        data: results
+                    });
 
                     return res.status(200).json({
                         results

@@ -5,6 +5,11 @@ import Joi from '@hapi/joi';
 import bcrypt from 'bcrypt';
 import jwt, { Secret } from 'jsonwebtoken';
 
+let refreshTokens: any[] = [];
+
+const GenerateAccessToken = (userID: string, roles: string) => {
+    return jwt.sign({ userID: userID, roles: roles }, process.env.TOKEN_SECRET as Secret, { expiresIn: '5m' })
+}
 
 const authVerify = (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.header('auth-access-token');
@@ -118,8 +123,32 @@ const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
 
     const validPassword = await bcrypt.compare(password, user[0].password);
     if (!validPassword) return res.status(400).send("Invalid password")
-        console.log(user)
-    const token = jwt.sign({ userID: user[0].iduser, roles: user[0].roles }, process.env.TOKEN_SECRET as Secret);
-    res.header('auth-access-token', token).status(200).send(token)
+    console.log(user)
+    const accessToken = GenerateAccessToken(user[0].iduser, user[0].roles);
+    const refreshToken = jwt.sign({ userID: user[0].iduser, roles: user[0].roles }, process.env.REFRESH_TOKEN_SECRET as Secret)
+    refreshTokens.push(refreshToken);
+    res.header('auth-access-token', accessToken).status(200).send({ accessToken: accessToken, refreshToken: refreshToken })
 }
-export default { UserRegister, UserLogin, authVerify }
+
+const RefreshToken = (req: Request, res: Response, next: NextFunction) => {
+    const refreshToken = req.body.token;
+
+    if (!refreshToken) return res.status(401).send("Refresh Token is null")
+
+    if (!refreshTokens.includes(refreshToken)) return res.status(403).send("Refresh Token was not found")
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as Secret, (err: any, user: any) => {
+
+        if (err) return res.status(403).send("Forbidden")
+
+        const accessToken = GenerateAccessToken(user.userID, user.roles);
+        res.status(200).send({ accessToken: accessToken })
+    })
+}
+
+const LogoutUser = (req: Request, res: Response, next: NextFunction) => {
+    refreshTokens = refreshTokens.filter(token => token != req.body.token);
+    res.status(204).json("Logout successfully");
+}
+
+export default { UserRegister, UserLogin, authVerify, RefreshToken, LogoutUser }

@@ -10,7 +10,10 @@ const getTeamsRatingList = (req: Request, res: Response, next: NextFunction) => 
             Query(connection, query)
                 .then((results: any) => {
 
-                    if (!Object.keys(results).length) return res.status(204).json(null);
+                    if (!Object.keys(results).length) return res.status(400).send({
+                        message: "Team rating was not found",
+                        data: results
+                    });
 
                     return res.status(200).json({
                         results
@@ -40,15 +43,18 @@ const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) 
     let teamID = req.params.teamID;
     let query = `SELECT * from rating WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
-
+    console.log("user.userID", user.userID)
     ConnectMYSQL()
         .then(connection => {
             Query(connection, query)
                 .then((results: any) => {
+                    console.log("results", results)
+                    if (!Object.keys(results).length) return res.status(400).send({
+                        message: "Team rating was not found",
+                        data: results
+                    });
 
-                    if (!Object.keys(results).length) return res.status(204).json(null);
-
-                    return res.status(200).json({
+                    return res.status(200).send({
                         results
                     })
                 })
