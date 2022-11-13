@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express"
 import { ConnectMYSQL, Query } from "../Config/mysql";
+export interface IGetUserAuthInfoRequest extends Request {
+    user: any
+}
 
 const getBasketballPlayersList = (req: Request, res: Response, next: NextFunction) => {
 
@@ -99,11 +102,11 @@ const getBasketballPlayerByID = (req: Request, res: Response, next: NextFunction
         })
 }
 
-const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
+const insertNewBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
 
-    if(user && user?.roles !== "Admin") return res.status(403).send("No Access");
+    if (user && user?.roles !== "Admin") return res.status(403).send("No Access");
 
     let query = `INSERT INTO basketball_player (name, position, price, team_name) VALUES ("${basketballPlayer_name}","${basketballPlayer_position}","${basketballPlayer_price}","${basketballPlayer_teamName}")`;
     ConnectMYSQL()
@@ -132,12 +135,12 @@ const insertNewBasketballPlayer = (req: Request, res: Response, next: NextFuncti
         })
 }
 
-const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
-    
+const deleteBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+
     const user = req.user;
     let playerID = req.params.basketballPlayerID;
 
-    if(user && user?.roles !== "Admin") return res.status(403).send("No Access");
+    if (user && user?.roles !== "Admin") return res.status(403).send("No Access");
 
     let query = `DELETE FROM basketball_player WHERE ID = ${playerID}`;
     ConnectMYSQL()
@@ -166,14 +169,14 @@ const deleteBasketballPlayer = (req: Request, res: Response, next: NextFunction)
         })
 }
 
-const updateBasketballPlayer = (req: Request, res: Response, next: NextFunction) => {
-    
+const updateBasketballPlayer = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+
     const user = req.user;
     let playerID = req.params.basketballPlayerID;
     let { basketballPlayer_name, basketballPlayer_position, basketballPlayer_price, basketballPlayer_teamName } = req.body;
-    
-    if(user && user?.roles !== "Admin") return res.status(403).send("No Access");
-    
+
+    if (user && user?.roles !== "Admin") return res.status(403).send("No Access");
+
     let query = `UPDATE basketball_player  SET name = "${basketballPlayer_name}", position = "${basketballPlayer_position}", price = "${basketballPlayer_price}", team_name = "${basketballPlayer_teamName}" WHERE ID = ${playerID} `;
     ConnectMYSQL()
         .then(connection => {

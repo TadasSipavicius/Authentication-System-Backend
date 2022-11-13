@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express"
 import { type } from "os";
 import { ConnectMYSQL, Query } from "../Config/mysql";
+import { IGetUserAuthInfoRequest } from "./basketballPlayer";
 
-const getTeamList = (req: Request, res: Response, next: NextFunction) => {
+const getTeamList = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     let query = `SELECT * from team WHERE user_identifier = "${user.userID}" `;
 
@@ -38,7 +39,7 @@ const getTeamList = (req: Request, res: Response, next: NextFunction) => {
         })
 }
 
-const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) => {
+const getTeamListByTeamID = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
 
     let teamID = req.params.teamID;
     const user = req.user;
@@ -77,7 +78,7 @@ const getTeamListByTeamID = (req: Request, res: Response, next: NextFunction) =>
         })
 }
 
-const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
+const insertNewTeam = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
 
     let { team_name } = req.body;
     const user = req.user;
@@ -109,7 +110,7 @@ const insertNewTeam = (req: Request, res: Response, next: NextFunction) => {
         })
 }
 
-const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
+const deleteTeam = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
 
     let teamID = req.params.teamID;
     const user = req.user;
@@ -141,7 +142,7 @@ const deleteTeam = (req: Request, res: Response, next: NextFunction) => {
         })
 }
 
-const updateTeam = (req: Request, res: Response, next: NextFunction) => {
+const updateTeam = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     let teamID = req.params.teamID;
     let { team_name, guard_players, foward_players, center_players } = req.body;
