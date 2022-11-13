@@ -16,9 +16,9 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "start": "node /src/app.js",
-    "build": "tsc",
-    "postinstall": "npm run build"
+    "start": "node .",
+    "build": "tsc --build tsconfig.json",
+    "postinstall": "node dist/App.js"
   },
   "author": "",
   "license": "ISC",
