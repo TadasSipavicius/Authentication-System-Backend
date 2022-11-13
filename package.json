@@ -17,8 +17,11 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "start": "ts-node src/app.ts",
-    "postinstall": "tsc"
+    "start": "node dist/App.js",
+    "postinstall": "tsc",
+    "watch-node": "nodemon dist/App.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "author": "",
   "license": "ISC",
