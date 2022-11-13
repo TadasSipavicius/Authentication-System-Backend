@@ -7,8 +7,8 @@ import ratingRoutes from './Routes/rating';
 import basketballPlayersRoutes from './Routes/basketballPlayer';
 import authRoutes from './Routes/auth';
 
-const app = express();
 const PORT = 3006;
+const app = express();
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,9 +25,5 @@ app.use('/api/team', teamRoutes);
 app.use('/api/basketballPlayer', basketballPlayersRoutes);
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`Working on server...`)
+    console.log(`Running on port ${process.env.PORT || PORT}`);
 })
-
-
-
-console.log("Veikiams");
