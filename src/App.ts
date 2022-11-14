@@ -25,7 +25,7 @@ app.use('/api/team', teamRoutes);
 app.use('/api/basketballPlayer', basketballPlayersRoutes);
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`Working on server...`)
+    console.log(`Running on port ${process.env.PORT || PORT}`)
 })
 
 
