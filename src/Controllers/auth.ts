@@ -12,6 +12,7 @@ const GenerateAccessToken = (userID: string, roles: string) => {
     return jwt.sign({ userID: userID, roles: roles }, process.env.TOKEN_SECRET as Secret, { expiresIn: '5m' })
 }
 
+
 const authVerify = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     const accessToken = req.header('auth-access-token');
     console.log(accessToken);
@@ -76,7 +77,7 @@ const UserRegister = async (req: Request, res: Response, next: NextFunction) => 
 
 const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-    console.log("AAA")
+    
     const validationSchema = Joi.object({
         email: Joi.string()
             .email(),
