@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-    return res.send("VEIKIAM");
+    return res.send("VEIKIAMs");
 })
 
 app.use('/api', authRoutes);
@@ -27,7 +27,3 @@ app.use('/api/basketballPlayer', basketballPlayersRoutes);
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Running on port ${process.env.PORT || PORT}`)
 })
-
-
-
-console.log("Veikiams");
