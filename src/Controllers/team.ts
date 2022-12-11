@@ -141,10 +141,55 @@ const deleteTeam = (req: any, res: Response, next: NextFunction) => {
         })
 }
 
+const ValidateGuardPlayers = (guardPlayers: number[]): string => {
+    if (guardPlayers.length < 3) {
+        return "You have to select at least 3 guard players";
+    };
+    if (guardPlayers.length > 5) {
+        return "You have to select fewer guard players. You can't have more than 5 guard players in your team";
+    };
+
+    return "Valid";
+}
+
+const ValidateFowardPlayers = (fowardPlayers: number[]): string => {
+    if (fowardPlayers.length < 3) {
+        return "You have to select at least 3 foward players";
+    };
+    if (fowardPlayers.length > 5) {
+        return "You have to select fewer foward players. You can't have more than 5 foward players in your team";
+    };
+
+    return "Valid";
+}
+
+const ValidateCenterPlayers = (fowardPlayers: number[]): string => {
+    if (fowardPlayers.length < 0) {
+        return "You have to select at least 1 center player";
+    };
+    if (fowardPlayers.length > 2) {
+        return "You have to select fewer center players. You can't have more than 2 center players in your team";
+    };
+
+    return "Valid";
+}
+
 const updateTeam = (req: any, res: Response, next: NextFunction) => {
     const user = req.user;
     let teamID = req.params.teamID;
     let { team_name, guard_players, foward_players, center_players } = req.body;
+
+    const validateGuards = ValidateGuardPlayers(guard_players);
+
+    if (validateGuards !== "Valid") res.status(400).json({ message: validateGuards })
+
+    const validateFowards = ValidateFowardPlayers(foward_players);
+
+    if (validateFowards !== "Valid") res.status(400).json({ message: validateFowards })
+
+    const validateCenters = ValidateCenterPlayers(center_players);
+
+    if (validateCenters !== "Valid") res.status(400).json({ message: validateCenters })
 
     let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
