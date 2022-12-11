@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-    return res.send("VEIKIAM");
+    return res.send("VEIKIAMs");
 })
 
 app.use('/api', authRoutes);
