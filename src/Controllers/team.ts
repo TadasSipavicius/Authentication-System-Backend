@@ -42,7 +42,6 @@ const getTeamListByTeamID = (req: any, res: Response, next: NextFunction) => {
 
     let teamID = req.params.teamID;
     const user = req.user;
-    console.log("user", user)
     let query = `SELECT * from team WHERE user_identifier = "${user.userID}" AND ID = "${teamID}"`;
 
     ConnectMYSQL()
@@ -164,7 +163,7 @@ const ValidateFowardPlayers = (fowardPlayers: number[]): string => {
 }
 
 const ValidateCenterPlayers = (fowardPlayers: number[]): string => {
-    if (fowardPlayers.length < 0) {
+    if (fowardPlayers.length <= 0) {
         return "You have to select at least 1 center player";
     };
     if (fowardPlayers.length > 2) {
@@ -181,15 +180,15 @@ const updateTeam = (req: any, res: Response, next: NextFunction) => {
 
     const validateGuards = ValidateGuardPlayers(guard_players);
 
-    if (validateGuards !== "Valid") res.status(400).json({ message: validateGuards })
+    if (validateGuards !== "Valid") return res.status(400).json({ message: validateGuards })
 
     const validateFowards = ValidateFowardPlayers(foward_players);
 
-    if (validateFowards !== "Valid") res.status(400).json({ message: validateFowards })
+    if (validateFowards !== "Valid") return res.status(400).json({ message: validateFowards })
 
     const validateCenters = ValidateCenterPlayers(center_players);
 
-    if (validateCenters !== "Valid") res.status(400).json({ message: validateCenters })
+    if (validateCenters !== "Valid") return res.status(400).json({ message: validateCenters })
 
     let query = `UPDATE team SET name = "${team_name}", guard_players = "${JSON.stringify(guard_players)}", foward_players = "${JSON.stringify(foward_players)}", center_players = "${JSON.stringify(center_players)}" WHERE ID = ${teamID} AND user_identifier = "${user.userID}"`;
 
@@ -219,4 +218,4 @@ const updateTeam = (req: any, res: Response, next: NextFunction) => {
         })
 }
 
-export default { getTeamList, getTeamListByTeamID, insertNewTeam, deleteTeam, updateTeam }
+export default { getTeamList, getTeamListByTeamID, insertNewTeam, deleteTeam, updateTeam, ValidateGuardPlayers, ValidateFowardPlayers, ValidateCenterPlayers }

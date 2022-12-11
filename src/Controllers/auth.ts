@@ -14,7 +14,6 @@ const GenerateAccessToken = (userID: string, roles: string) => {
 
 const authVerify = (req: any, res: Response, next: NextFunction) => {
     const accessToken = req.header('auth-access-token');
-    console.log(accessToken);
     if (!accessToken) return res.status(401).send("Access Denied");
 
     try {
@@ -124,7 +123,7 @@ const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
 
     const validPassword = await bcrypt.compare(password, user[0].password);
     if (!validPassword) return res.status(400).send("Invalid password")
-    console.log(user)
+
     const accessToken = GenerateAccessToken(user[0].iduser, user[0].roles);
     const refreshToken = jwt.sign({ userID: user[0].iduser, roles: user[0].roles }, process.env.REFRESH_TOKEN_SECRET as Secret)
     refreshTokens.push(refreshToken);

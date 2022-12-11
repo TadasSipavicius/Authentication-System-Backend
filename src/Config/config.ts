@@ -6,9 +6,7 @@ const MYSQL_HOST = process.env.MYSQL_HOST;
 const MYSQL_DATABASE = process.env.MYSQL_DATABASE;
 const MYSQL_USER = process.env.MYSQL_USER;
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
-console.log("MYSQL_HOST", MYSQL_HOST)
-console.log("MYSQL_DATABASE", MYSQL_DATABASE)
-console.log("MYSQL_USER", MYSQL_USER)
+
 const MYSQL = {
     host: MYSQL_HOST,
     database: MYSQL_DATABASE,

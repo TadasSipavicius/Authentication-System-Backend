@@ -27,3 +27,5 @@ app.use('/api/basketballPlayer', basketballPlayersRoutes);
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Running on port ${process.env.PORT || PORT}`)
 })
+
+export default app;
