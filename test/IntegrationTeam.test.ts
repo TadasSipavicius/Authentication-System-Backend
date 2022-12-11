@@ -1,6 +1,5 @@
 import app from '../src/App';
 import request from 'supertest';
-import { response } from 'express';
 
 describe("Team integration tests", () => {
 

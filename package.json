@@ -27,7 +27,8 @@
     "watch-node": "nodemon dist/App.js",
     "watch-ts": "tsc -w",
     "deploy": "git add . && git commit -m Heroku && git push heroku master",
-    "test": "jest"
+    "test": "jest",
+    "test-coverage": "jest --coverage --collectCoverageFrom='./src/Controllers/team.ts'"
   },
   "author": "",
   "license": "ISC",
