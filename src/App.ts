@@ -7,8 +7,8 @@ import ratingRoutes from './Routes/rating';
 import basketballPlayersRoutes from './Routes/basketballPlayer';
 import authRoutes from './Routes/auth';
 
-const PORT = 3006;
 const app = express();
+const PORT = 1337;
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));

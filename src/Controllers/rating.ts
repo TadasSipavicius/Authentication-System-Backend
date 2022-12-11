@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { ConnectMYSQL, Query } from "../Config/mysql";
+import { IGetUserAuthInfoRequest } from "./basketballPlayer";
 
 const getTeamsRatingList = (req: Request, res: Response, next: NextFunction) => {
 
@@ -37,7 +38,7 @@ const getTeamsRatingList = (req: Request, res: Response, next: NextFunction) => 
         })
 }
 
-const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) => {
+const getTeamRatingByTeamID = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
 
     const user = req.user;
     let teamID = req.params.teamID;
@@ -76,7 +77,7 @@ const getTeamRatingByTeamID = (req: Request, res: Response, next: NextFunction) 
         })
 }
 
-const insertNewTeamToRating = async (req: Request, res: Response, next: NextFunction) => {
+const insertNewTeamToRating = async (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     
     const user = req.user;
     let { teamID, teamName, ratingPlace } = req.body;
@@ -108,7 +109,7 @@ const insertNewTeamToRating = async (req: Request, res: Response, next: NextFunc
         })
 }
 
-const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) => {
+const deleteTeamFromRating = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     
     const user = req.user;
     let teamID = req.params.teamID;
@@ -140,7 +141,7 @@ const deleteTeamFromRating = (req: Request, res: Response, next: NextFunction) =
         })
 }
 
-const resetRating = (req: Request, res: Response, next: NextFunction) => {
+const resetRating = (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     let query = `DELETE FROM rating`;
 

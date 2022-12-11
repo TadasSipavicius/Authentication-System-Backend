@@ -1,7 +1,7 @@
 import * as Express from "express";
 
-declare module "Express" {
-  interface Request {
+declare namespace Express {
+  export interface Request {
     user?: any
   }
 }
