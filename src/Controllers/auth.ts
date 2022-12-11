@@ -46,6 +46,7 @@ const UserRegister = async (req: Request, res: Response, next: NextFunction) => 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
+    // eslint-disable-next-line prefer-const
     let query = `INSERT INTO user (iduser, userName, email, password, roles) VALUES ("${uuidv4()}", "${userName}","${email}","${hashPassword}","User")`;
     ConnectMYSQL()
         .then(connection => {
@@ -87,6 +88,7 @@ const UserLogin = async (req: Request, res: Response, next: NextFunction) => {
     if (error) return res.status(400).send(error?.details[0].message);
 
 
+    // eslint-disable-next-line prefer-const
     let query = `SELECT * from user WHERE email = "${email}"`;
     let user: any[] = [];
     await ConnectMYSQL()

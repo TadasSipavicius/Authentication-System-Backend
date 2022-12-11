@@ -8,7 +8,10 @@ import basketballPlayersRoutes from './Routes/basketballPlayer';
 import authRoutes from './Routes/auth';
 
 const app = express();
-const PORT = 1337;
+
+const PORT: number = 1337;
+const t = "";
+console.log("t", t)
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
