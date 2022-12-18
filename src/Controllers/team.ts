@@ -11,10 +11,10 @@ const getTeamList = (req: any, res: Response, next: NextFunction) => {
             Query(connection, query)
                 .then((results: any) => {
 
-                    if (!Object.keys(results).length) return res.status(400).send({
-                        message: "No data was found",
-                        data: results
-                    });
+                    // if (!Object.keys(results).length) return res.status(200).send({
+                    //     message: "No data was found",
+                    //     data: results
+                    // });
 
                     return res.status(200).json({
                         results
