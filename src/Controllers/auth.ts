@@ -8,7 +8,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 let refreshTokens: any[] = [];
 
 const GenerateAccessToken = (userID: string, roles: string) => {
-    return jwt.sign({ userID: userID, roles: roles }, process.env.TOKEN_SECRET as Secret, { expiresIn: '5m' })
+    return jwt.sign({ userID: userID, roles: roles }, process.env.TOKEN_SECRET as Secret, { expiresIn: '50m' })
 }
 
 
